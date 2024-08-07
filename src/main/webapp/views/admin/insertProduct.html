@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Thêm Sản Phẩm</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/static/css/insertProduct.css}">
+</head>
+<body>
+<div class="container">
+    <p th:if="${errorMessage}" th:text="${errorMessage}"></p>
+    <form th:action="@{/insertProduct}" th:object="${product}" method="post" enctype="multipart/form-data">
+        <label for="productName">Tên sản phẩm:</label>
+        <input type="text" id="productName" th:field="*{productName}" placeholder="Nhập tên sản phẩm" required>
+
+
+        <label for="productPrice">Giá sản phẩm:</label>
+        <input type="number" id="productPrice" th:field="*{productPrice}" step="0.01" placeholder="Nhập giá sản phẩm" required>
+
+
+        <label for="color">Color:</label>
+        <select id="color" th:field="*{color}">
+            <option value="Red">Red</option>
+            <option value="Blue">Blue</option>
+            <option value="Green">Green</option>
+            <option value="Black">Black</option>
+        </select>
+
+
+        <label for="size">Size:</label>
+        <select id="size" th:field="*{size}">
+            <option value="S">S</option>
+            <option value="M">M</option>
+            <option value="L">L</option>
+            <option value="XL">XL</option>
+        </select>
+
+        <label for="stock">Số lượng tồn kho:</label>
+        <input type="number" id="stock" th:field="*{stock}" placeholder="Nhập số lượng tồn kho" required>
+
+
+        <label for="description">Mô tả:</label>
+        <textarea id="description" th:field="*{description}" placeholder="Nhập mô tả"></textarea>
+
+
+
+        <label for="status">Trạng thái:</label>
+        <select id="status" th:field="*{status}">
+            <option value="true">Hoạt động</option>
+            <option value="false">Ngừng hoạt động</option>
+        </select>
+
+
+        <label for="category">Danh mục:</label>
+        <select id="category" th:field="*{category.categoryId}">
+            <option th:each="cat : ${categoryList}" th:value="${cat.categoryId}" th:text="${cat.categoryName}"></option>
+        </select>
+
+
+        <label for="filePrimary">Ảnh chính:</label>
+        <input type="file" id="filePrimary" name="filePrimary" required>
+
+
+        <label for="secondaryImages">Ảnh phụ:</label>
+        <input type="file" id="secondaryImages" name="secondaryImages" multiple>
+
+        <button type="submit">Thêm Sản Phẩm</button>
+    </form>
+
+</div>
+</body>
+</html>

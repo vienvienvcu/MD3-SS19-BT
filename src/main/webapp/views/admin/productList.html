@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>List Product</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/static/css/listProduct.css}">
+
+</head>
+<body>
+
+<h2>List Product</h2>
+<div class="content">
+    <a href="/initInsertProduct" class="link">+Add Product</a>
+    <form action="BookServlet" method="get">
+        <input type="hidden" name="action" value="search"/>
+        <input type="text" name="name" placeholder="Search by name"/>
+        <button type="submit" class="link">Search</button>
+    </form>
+</div>
+<div class="container">
+    <p th:if="${errorMessage}" th:text="${errorMessage}"></p>
+    <table th:border="1">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Tên Sản Phẩm</th>
+            <th>Hình Ảnh</th>
+            <th>Giá</th>
+            <th>Màu Sắc</th>
+            <th>Kích Thước</th>
+            <th>Số Lượng</th>
+            <th>Mô Tả</th>
+            <th>Ngày Tạo</th>
+            <th>Ngày Cập Nhật</th>
+            <th>Trạng Thái</th>
+            <th>Action</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="product : ${productList}">
+            <td th:text="${product.productId}"></td>
+            <td th:text="${product.productName}"></td>
+            <td>
+                <img th:src="@{${product.productImage}}" alt="Image" style="width:100px; height:auto;">
+            </td>
+            <td th:text="${product.productPrice}"></td>
+            <td th:text="${product.color}"></td>
+            <td th:text="${product.size}"></td>
+            <td th:text="${product.stock}"></td>
+            <td th:text="${product.description}"></td>
+            <td th:text="${#dates.format(product.createTime, 'yyyy-MM-dd')}"></td>
+            <td th:text="${#dates.format(product.updateTime, 'yyyy-MM-dd')}"></td>
+            <td th:text="${product.status ? 'Active' : 'Inactive'}"></td>
+            <td>
+                <a href="#" th:href="@{/initUpdateProduct/{id}(id=${product.productId})}" class="item">Edit</a>
+                <a href="#" th:href="@{/deleteProduct/{id}(id=${product.productId})}" class="item">Delete</a>
+                <a href="#" th:href="@{/detailProduct/{id}(id=${product.productId})}" class="item">detail</a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+    <a th:href="@{/adminHome}" class="item">Back</a>
+</div>
+</body>
+</html>
