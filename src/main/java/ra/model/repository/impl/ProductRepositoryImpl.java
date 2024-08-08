@@ -2,6 +2,7 @@ package ra.model.repository.impl;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import ra.model.entity.Product;
@@ -17,8 +18,10 @@ public class ProductRepositoryImpl implements IProductRepository {
     public List<Product> getAllProducts() {
         Session session = sessionFactory.openSession();
         try {
-          List productList = session.createQuery("from Product").list();
-          return productList;
+            // Sử dụng JPQL với JOIN FETCH để nạp danh sách hình ảnh phụ
+            String hql = "SELECT DISTINCT p FROM Product p LEFT JOIN FETCH p.imageList";
+            List<Product> productList = session.createQuery(hql).list();
+            return productList;
         }catch (Exception e) {
             e.printStackTrace();
             session.getTransaction().rollback();
@@ -92,12 +95,34 @@ public class ProductRepositoryImpl implements IProductRepository {
     public Product getProductById(Integer proId) {
         Session session = sessionFactory.openSession();
         try {
-            return session.get(Product.class, proId);
+            // Sử dụng JPQL với JOIN FETCH để nạp danh sách hình ảnh phụ
+            String hql = "SELECT p FROM Product p LEFT JOIN FETCH p.imageList WHERE p.productId = :productId";
+            Product product = (Product) session.createQuery(hql)
+                    .setParameter("productId", proId)
+                    .uniqueResult();
+            return product;
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
             session.close();
         }
         return null;
+    }
+
+    @Override
+    public List<Product> searchProduct(String productName) {
+        Session session = sessionFactory.openSession();
+        try {
+            session.beginTransaction();
+            String hql = "FROM Product WHERE productName LIKE :productName";
+            Query<Product> query = session.createQuery(hql, Product.class);
+            query.setParameter("productName", "%" + productName + "%");
+            return query.getResultList();
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw e;
+        } finally {
+            session.close();
+        }
     }
 }

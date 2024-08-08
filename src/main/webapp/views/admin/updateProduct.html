@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Update Product</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/static/css/updateProduct.css}">
+</head>
+<body>
+<header>
+    <h2>Update Product</h2>
+</header>
+<div class="container">
+    <form th:action="@{/updateProduct}" method="post" enctype="multipart/form-data">
+        <input type="hidden" name="productId" th:value="${product.productId}"/>
+
+        <label for="productName">Name:</label>
+        <input type="text" id="productName" name="productName" th:value="${product.productName}"/>
+
+        <label for="category_id">Category:</label>
+        <select id="category_id" name="category.categoryId" required>
+            <option th:each="cat : ${categoryList}"
+                    th:value="${cat.categoryId}"
+                    th:text="${cat.categoryName}"
+                    th:selected="${product.category.categoryId == cat.categoryId}"></option>
+        </select>
+
+
+        <label for="productPrice">Price:</label>
+        <input type="number" id="productPrice" name="productPrice" step="0.01" th:value="${product.productPrice}"/>
+
+        <label>Color:</label>
+        <div>
+            <input type="radio" id="colorRed" name="color" value="Red"
+                   th:checked="${product.color == 'Red'}"/>
+            <label for="colorRed">Red</label>
+        </div>
+        <div>
+            <input type="radio" id="colorBlue" name="color" value="Blue"
+                   th:checked="${product.color == 'Blue'}"/>
+            <label for="colorBlue">Blue</label>
+        </div>
+        <div>
+            <input type="radio" id="colorGreen" name="color" value="Green"
+                   th:checked="${product.color == 'Green'}"/>
+            <label for="colorGreen">Green</label>
+        </div>
+        <div>
+            <input type="radio" id="colorBlack" name="color" value="Black"
+                   th:checked="${product.color == 'Black'}"/>
+            <label for="colorBlack">Black</label>
+        </div>
+        <label>Size:</label>
+        <div>
+            <input type="radio" id="sizeS" name="size" value="S"
+                   th:checked="${product.size == 'S'}"/>
+            <label for="sizeS">S</label>
+        </div>
+        <div>
+            <input type="radio" id="sizeM" name="size" value="M"
+                   th:checked="${product.size == 'M'}"/>
+            <label for="sizeM">M</label>
+        </div>
+        <div>
+            <input type="radio" id="sizeL" name="size" value="L"
+                   th:checked="${product.size == 'L'}"/>
+            <label for="sizeL">L</label>
+        </div>
+        <div>
+            <input type="radio" id="sizeXL" name="size" value="XL"
+                   th:checked="${product.size == 'XL'}"/>
+            <label for="sizeXL">XL</label>
+        </div>
+
+        <label for="stock">Stock:</label>
+        <input type="number" id="stock" name="stock" th:value="${product.stock}"/>
+
+        <label for="description">Description:</label>
+        <input type="text" id="description" name="description" th:value="${product.description}"/>
+
+
+
+        <label for="productImage">Primary Image:</label>
+        <input type="file" id="productImage" name="filePrimary"/>
+
+
+        <div th:if="${product.productImage != null}">
+            <h3>Current Primary Image</h3>
+            <img th:src="@{${product.productImage}}" alt="Primary Image" style="width:300px;"/>
+        </div>
+
+        <label for="secondaryImages">Secondary Images:</label>
+        <input type="file" id="secondaryImages" name="secondaryImages" multiple/>
+
+
+        <div th:if="${product.imageList != null}">
+            <h3>Current Secondary Images</h3>
+            <div th:each="image : ${product.imageList}">
+                <img th:src="@{${image.imageName}}" alt="Secondary Image" style="width:150px;"/>
+            </div>
+        </div>
+
+        <p>Status:</p>
+        <div class="btn-group">
+            <label for="active">
+                <input type="radio" name="status" id="active" value="true" th:checked="${product.status}" > Active
+            </label>
+            <label for="inactive">
+                <input type="radio" name="status" id="inactive" value="false" th:checked="${!product.status}" > Inactive
+            </label>
+        </div>
+
+
+        <button type="submit">Update Product</button>
+    </form>
+
+    <footer>
+        <a href="#" th:href="@{/loadProduct}">Back to Product List</a>
+    </footer>
+</div>
+</body>
+</html>

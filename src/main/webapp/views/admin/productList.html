@@ -11,19 +11,21 @@
 <h2>List Product</h2>
 <div class="content">
     <a href="/initInsertProduct" class="link">+Add Product</a>
-    <form action="BookServlet" method="get">
-        <input type="hidden" name="action" value="search"/>
-        <input type="text" name="name" placeholder="Search by name"/>
+    <!-- Form tìm kiếm sản phẩm theo tên -->
+    <form th:action="@{/searchProductByName}" method="get">
+        <input type="text" name="productName" placeholder="Search by name"/>
         <button type="submit" class="link">Search</button>
     </form>
 </div>
 <div class="container">
+    <p th:text="${error}"></p>
     <p th:if="${errorMessage}" th:text="${errorMessage}"></p>
     <table th:border="1">
         <thead>
         <tr>
             <th>ID</th>
             <th>Tên Sản Phẩm</th>
+            <th>Category Name</th>
             <th>Hình Ảnh</th>
             <th>Giá</th>
             <th>Màu Sắc</th>
@@ -40,6 +42,7 @@
         <tr th:each="product : ${productList}">
             <td th:text="${product.productId}"></td>
             <td th:text="${product.productName}"></td>
+            <td th:text="${product.category.categoryName}"></td>
             <td>
                 <img th:src="@{${product.productImage}}" alt="Image" style="width:100px; height:auto;">
             </td>
@@ -52,9 +55,9 @@
             <td th:text="${#dates.format(product.updateTime, 'yyyy-MM-dd')}"></td>
             <td th:text="${product.status ? 'Active' : 'Inactive'}"></td>
             <td>
-                <a href="#" th:href="@{/initUpdateProduct/{id}(id=${product.productId})}" class="item">Edit</a>
+                <a href="updateProduct.html" th:href="@{/initUpdateProduct/{id}(id=${product.productId})}" class="item">Edit</a>
                 <a href="#" th:href="@{/deleteProduct/{id}(id=${product.productId})}" class="item">Delete</a>
-                <a href="#" th:href="@{/detailProduct/{id}(id=${product.productId})}" class="item">detail</a>
+                <a href="detailProduct.html" th:href="@{/detailProduct/{id}(id=${product.productId})}" class="item">detail</a>
             </td>
         </tr>
         </tbody>

@@ -9,55 +9,80 @@
 <div class="container">
     <p th:if="${errorMessage}" th:text="${errorMessage}"></p>
     <form th:action="@{/insertProduct}" th:object="${product}" method="post" enctype="multipart/form-data">
+
         <label for="productName">Tên sản phẩm:</label>
-        <input type="text" id="productName" th:field="*{productName}" placeholder="Nhập tên sản phẩm" required>
-
-
-        <label for="productPrice">Giá sản phẩm:</label>
-        <input type="number" id="productPrice" th:field="*{productPrice}" step="0.01" placeholder="Nhập giá sản phẩm" required>
-
-
-        <label for="color">Color:</label>
-        <select id="color" th:field="*{color}">
-            <option value="Red">Red</option>
-            <option value="Blue">Blue</option>
-            <option value="Green">Green</option>
-            <option value="Black">Black</option>
-        </select>
-
-
-        <label for="size">Size:</label>
-        <select id="size" th:field="*{size}">
-            <option value="S">S</option>
-            <option value="M">M</option>
-            <option value="L">L</option>
-            <option value="XL">XL</option>
-        </select>
-
-        <label for="stock">Số lượng tồn kho:</label>
-        <input type="number" id="stock" th:field="*{stock}" placeholder="Nhập số lượng tồn kho" required>
-
-
-        <label for="description">Mô tả:</label>
-        <textarea id="description" th:field="*{description}" placeholder="Nhập mô tả"></textarea>
-
-
-
-        <label for="status">Trạng thái:</label>
-        <select id="status" th:field="*{status}">
-            <option value="true">Hoạt động</option>
-            <option value="false">Ngừng hoạt động</option>
-        </select>
-
+        <input type="text" id="productName" th:field="*{productName}" placeholder="Nhập tên sản phẩm">
+        <div th:if="${#fields.hasErrors('productName')}" th:errors="*{productName}"></div>
 
         <label for="category">Danh mục:</label>
         <select id="category" th:field="*{category.categoryId}">
             <option th:each="cat : ${categoryList}" th:value="${cat.categoryId}" th:text="${cat.categoryName}"></option>
         </select>
 
+        <label for="productPrice">Giá sản phẩm:</label>
+        <input type="number" id="productPrice" th:field="*{productPrice}" step="0.01" placeholder="Nhập giá sản phẩm">
+        <div th:if="${#fields.hasErrors('productPrice')}" th:errors="*{productPrice}"></div>
+
+        <label>Color:</label>
+        <div>
+            <input type="radio" id="colorRed" name="color" value="Red" th:field="*{color}">
+            <label for="colorRed">Red</label>
+        </div>
+        <div>
+            <input type="radio" id="colorBlue" name="color" value="Blue" th:field="*{color}">
+            <label for="colorBlue">Blue</label>
+        </div>
+        <div>
+            <input type="radio" id="colorGreen" name="color" value="Green" th:field="*{color}">
+            <label for="colorGreen">Green</label>
+        </div>
+        <div>
+            <input type="radio" id="colorBlack" name="color" value="Black" th:field="*{color}">
+            <label for="colorBlack">Black</label>
+        </div>
+        <div th:if="${#fields.hasErrors('color')}" th:errors="*{color}"></div>
+
+        <label>Size:</label>
+        <div>
+            <input type="radio" id="sizeS" name="size" value="S" th:field="*{size}">
+            <label for="sizeS">S</label>
+        </div>
+        <div>
+            <input type="radio" id="sizeM" name="size" value="M" th:field="*{size}">
+            <label for="sizeM">M</label>
+        </div>
+        <div>
+            <input type="radio" id="sizeL" name="size" value="L" th:field="*{size}">
+            <label for="sizeL">L</label>
+        </div>
+        <div>
+            <input type="radio" id="sizeXL" name="size" value="XL" th:field="*{size}">
+            <label for="sizeXL">XL</label>
+        </div>
+        <div th:if="${#fields.hasErrors('size')}" th:errors="*{size}"></div>
+
+        <label for="stock">Số lượng tồn kho:</label>
+        <input type="number" id="stock" th:field="*{stock}" placeholder="Nhập số lượng tồn kho">
+        <div th:if="${#fields.hasErrors('stock')}" th:errors="*{stock}"></div>
+
+        <label for="description">Mô tả:</label>
+        <textarea id="description" th:field="*{description}" placeholder="Nhập mô tả"></textarea>
+        <div th:if="${#fields.hasErrors('description')}" th:errors="*{description}"></div>
+
+        <label>Status:</label>
+        <div>
+            <input type="radio" id="statusActive" name="status" value="true" th:field="*{status}">
+            <label for="statusActive">Active</label>
+        </div>
+        <div>
+            <input type="radio" id="statusInactive" name="status" value="false" th:field="*{status}">
+            <label for="statusInactive">Inactive</label>
+        </div>
+        <div th:if="${#fields.hasErrors('status')}" th:errors="*{status}"></div>
+
 
         <label for="filePrimary">Ảnh chính:</label>
-        <input type="file" id="filePrimary" name="filePrimary" required>
+        <input type="file" id="filePrimary" name="filePrimary">
 
 
         <label for="secondaryImages">Ảnh phụ:</label>

@@ -10,4 +10,5 @@ public interface IProductService {
     Boolean updateProduct(Product product);
     Boolean deleteProduct(Integer proId);
     Product getProductById(Integer proId);
+    List<Product> searchProduct(String productName);
 }

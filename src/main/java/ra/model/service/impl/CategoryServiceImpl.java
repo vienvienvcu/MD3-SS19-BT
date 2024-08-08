@@ -25,4 +25,6 @@ public class CategoryServiceImpl implements ICategoryService {
     public Category getCategoryById(Integer CateId) {
         return categoryRepository.getCategoryById(CateId);
     }
+
+
 }

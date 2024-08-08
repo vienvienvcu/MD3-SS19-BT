@@ -35,4 +35,9 @@ public class ProductServiceImpl implements IProductService {
     public Product getProductById(Integer proId) {
         return productService.getProductById(proId);
     }
+
+    @Override
+    public List<Product> searchProduct(String productName) {
+        return productService.searchProduct(productName);
+    }
 }

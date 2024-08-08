@@ -28,9 +28,7 @@ public class Product {
     private String productName;
 
     @Column(name = "product_image")
-    @NotBlank(message = "Image name cannot be empty")
     private String productImage;
-
 
     @NotNull(message = "Product price cannot be null")
     @DecimalMin(value = "0.0", inclusive = false, message = "Product price must be greater than zero")
@@ -51,11 +49,12 @@ public class Product {
     private Integer stock;
 
     @Column(name = "description")
-    @Size(max = 500, message = "Description can be up to 500 characters long")
+    @Size(max = 200, message = "Description can be up to 500 characters long")
+    @NotBlank(message = "khong duoc rong")
     private String description;
 
     @Column(name = "create_time")
-    @DateTimeFormat(pattern = "yyyy-mm-dd")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     @PastOrPresent(message = "Creation time must be in the past or present")
     private Date createTime;
 

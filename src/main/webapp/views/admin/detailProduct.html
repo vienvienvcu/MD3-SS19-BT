@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Product Details</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        .product-detail {
+            border: 1px solid #ddd;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        .product-detail h2 {
+            margin-top: 0;
+        }
+        .product-detail img {
+            border-radius: 8px;
+            margin-right: 10px;
+        }
+        .product-detail .secondary-images img {
+            margin-top: 10px;
+        }
+        .error {
+            color: red;
+        }
+    </style>
+</head>
+<body>
+
+<h1>Product Details</h1>
+
+<div class="product-detail" th:if="${product != null}">
+    <h2 th:text="${product.productName}">Product Name</h2>
+    <p>Price: <span th:text="${product.productPrice}">Price</span></p>
+    <p>Stock: <span th:text="${product.stock}">Stock</span></p>
+    <p>Color: <span th:text="${product.color}">Color</span></p>
+    <p>Size: <span th:text="${product.size}">Size</span></p>
+    <p>Description: <span th:text="${product.description}">Description</span></p>
+    <p>Status: <span th:text="${product.status ? 'Active' : 'Inactive'}">Status</span></p>
+
+    <div th:if="${product.productImage != null}">
+        <h3>Primary Image</h3>
+        <img th:src="@{${product.productImage}}" alt="Primary Image" style="width:300px;"/>
+    </div>
+
+    <h3>Secondary Images</h3>
+    <div class="secondary-images" th:each="image : ${product.imageList}">
+        <img th:src="@{${image.imageName}}" alt="Secondary Image" style="width:150px;"/>
+    </div>
+</div>
+
+<div class="error" th:if="${error != null}">
+    <p th:text="${error}">Error</p>
+</div>
+
+<a href="#" th:href="@{/loadProduct}">Back to Product List</a>
+
+</body>
+</html>

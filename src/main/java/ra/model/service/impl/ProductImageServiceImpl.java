@@ -15,4 +15,14 @@ public class ProductImageServiceImpl implements IProductImageService {
     public List<ProductImage> findAll() {
         return productImageRepository.findAll();
     }
+
+    @Override
+    public Boolean save(ProductImage productImage) {
+        return productImageRepository.save(productImage);
+    }
+
+    @Override
+    public Boolean delete(Integer productImgId) {
+        return productImageRepository.delete(productImgId);
+    }
 }
